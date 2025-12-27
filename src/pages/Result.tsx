@@ -21,12 +21,13 @@ const generateYourResult = (transcript: TranscriptMessage[]): GDResult => {
   const yourMessages = transcript.filter((m) => m.isYou);
   const messageCount = yourMessages.length;
   
-  // Calculate scores based on participation
-  const participation = Math.min(10, (messageCount / 5) * 10);
-  const relevance = 7.5 + Math.random() * 2;
-  const communication = 7 + Math.random() * 2.5;
-  const confidence = 6.5 + Math.random() * 3;
-  const logicalFlow = 7 + Math.random() * 2.5;
+  // Calculate scores based on participation (with minimum base scores)
+  const baseParticipation = messageCount > 0 ? Math.min(10, 5 + (messageCount / 3) * 5) : 6.5;
+  const relevance = 7.8 + Math.random() * 1.5;
+  const communication = 7.5 + Math.random() * 2;
+  const confidence = 7.2 + Math.random() * 2.3;
+  const logicalFlow = 7.6 + Math.random() * 1.8;
+  const participation = baseParticipation + Math.random() * 1.5;
   
   const overallScore = ((participation + relevance + communication + confidence + logicalFlow) / 5);
 
@@ -36,22 +37,24 @@ const generateYourResult = (transcript: TranscriptMessage[]): GDResult => {
     score: parseFloat(overallScore.toFixed(1)),
     rank: Math.floor(Math.random() * 3) + 1,
     strengths: [
-      'Clear articulation of thoughts',
-      'Good understanding of the topic',
-      'Respectful towards other participants',
-      'Used relevant examples to support points',
-    ].slice(0, 2 + Math.floor(Math.random() * 2)),
+      'Clear and articulate presentation of ideas',
+      'Strong understanding of the topic and its implications',
+      'Respectful and collaborative approach with other participants',
+      'Used relevant real-world examples to support arguments',
+      'Maintained composure and confidence throughout the discussion',
+    ],
     weaknesses: [
-      'Could have participated more actively',
-      'Some points needed more depth',
-      'Opportunity to engage with counter-arguments',
-    ].slice(0, 1 + Math.floor(Math.random() * 2)),
+      'Could initiate more points proactively',
+      'Some arguments needed deeper analysis',
+      'More engagement with opposing viewpoints would strengthen arguments',
+    ],
     suggestions: [
-      'Try to initiate discussions more often',
-      'Support your arguments with data or examples',
-      'Engage more with other participants\' points',
-      'Practice summarizing key points at the end',
-    ].slice(0, 2 + Math.floor(Math.random() * 2)),
+      'Practice opening statements to initiate discussions confidently',
+      'Back up your arguments with statistics and credible sources',
+      'Actively acknowledge and build upon other participants\' points',
+      'Summarize key takeaways at the end to leave a strong impression',
+      'Work on body language and eye contact for better presence',
+    ],
     relevance,
     communication,
     confidence,
